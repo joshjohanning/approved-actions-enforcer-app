@@ -1,0 +1,30 @@
+{
+  "name": "approved-actions-enforcer-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A Probot app designed to review Actions workflows to ensure it is running approved actions, and if not, terminate the workflow",
+  "author": "Josh Johanning",
+  "license": "ISC",
+  "homepage": "https://github.com//",
+  "keywords": [
+    "probot",
+    "github",
+    "probot-app"
+  ],
+  "scripts": {
+    "start": "probot run ./index.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "probot": "^13.0.1"
+  },
+  "devDependencies": {
+    "nock": "^14.0.0-beta.5",
+    "smee-client": "^2.0.0"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "type": "module"
+}

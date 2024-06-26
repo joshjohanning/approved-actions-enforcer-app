@@ -5,6 +5,7 @@ import yaml from 'js-yaml';
  * @param {import('probot').Probot} app
  */
 export default (app) => {
+try {
   if (!process.env.approvedActionsOrg) throw new Error('Environment variable `approvedActionsOrg` is not set or is empty.');
   if (!process.env.approvedActionsRepo) throw new Error('Environment variable `approvedActionsRepo` is not set or is empty.');
   if (!process.env.approvedActionsFilePath) throw new Error('Environment variable `approvedActionsFilePath` is not set or is empty.');
@@ -13,62 +14,46 @@ export default (app) => {
   app.log.info("Yay, the app was loaded!");
 
   app.on("workflow_run.requested", async (context) => {
-    app.log.info("Workflow run requested");
-    // app.log.info(context.payload);
-    app.log.info(context.payload.workflow_run);
-    // const workflowRun = context.workflow({
-    //   body: "Thanks for running this workflow!",
-    // });
-    // return context.octokit.issues.createComment(issueComment);
+    app.log.info(`Workflow run ${context.payload.workflow_run.id} requested in ${context.payload.repository.full_name}`);
 
-    // TODO: these should probably be debug level logs
-    app.log.info(`owner: ${context.payload.repository.owner.login}`);
-    app.log.info(`repo: ${context.payload.repository.name}`);
-    app.log.info(`workflow_run_id: ${context.payload.workflow_run.id}`);
-    app.log.info(`path: ${context.payload.workflow_run.path}`);
+    // Log the entire payload for debugging
+    app.log.debug(context.payload.workflow_run);
+    app.log.debug(`owner: ${context.payload.repository.owner.login}`);
+    app.log.debug(`repo: ${context.payload.repository.name}`);
+    app.log.debug(`workflow_run_id: ${context.payload.workflow_run.id}`);
+    app.log.debug(`path: ${context.payload.workflow_run.path}`);
 
     const approvedActions = await getFileContent(context, process.env.approvedActionsOrg, process.env.approvedActionsRepo, process.env.approvedActionsFilePath);
     app.log.debug(approvedActions);
 
-    // Set to actions
     const actionsSet = parseActionsYml(approvedActions);
     app.log.info(`Actions: ${actionsSet}`);
     const firstActionIterator = actionsSet.values();
     const firstAction = firstActionIterator.next().value;
     app.log.info(`First Action: ${firstAction}`);
 
-    // get the running workflow's yml
     const workflowYml = await getFileContent(context, context.payload.repository.owner.login, context.payload.repository.name, context.payload.workflow_run.path);
     app.log.info(`Workflow YML: ${workflowYml}`);
-    // get each action from the yml - we will likely have to use regex to find the action names after `uses:`
-    // TODO: ignore lines starting with '#'
-    const actions = workflowYml.match(/(?<=^(?!\s*#).*uses: ).*/gm);
 
-    // Log the entire array for debugging
+    const actions = workflowYml.match(/(?<=^(?!\s*#).*uses: ).*/gm);
     app.log.info(`Actions: ${actions}`);
 
-    // Loop through each action in the array
     for (const action of actions) {
-        // Log or perform operations with each action
-        app.log.info(`Processing action: ${action}`);
-        const doesActionExit = actionExists(action, actionsSet);
-        app.log.info(`Action exists: ${doesActionExit}`);
-        // Add any additional logic needed for each action here
-        if (!doesActionExit) {
-          // Cancel the workflow run if the action is not in the allow list
-          await cancelWorkflowRun(app, context);
-          break;
-        }
+      app.log.info(`Processing action: ${action}`);
+      const doesActionExit = actionExists(action, actionsSet);
+      app.log.info(`Action exists in allowed list: ${doesActionExit}`);
+      if (!doesActionExit) {
+        await cancelWorkflowRun(app, context);
+        break;
+      }
     }
-
   });
-
-  // For more information on building apps:
-  // https://probot.github.io/docs/
-
-  // To get your app running against GitHub, see:
-  // https://probot.github.io/docs/development/
-};
+} catch (error) {
+  app.log.error(`An error occurred: ${error.message}`);
+  process.exit(1);
+  // Handle the error appropriately
+  // For example, you might want to exit the process or send a notification
+}};
 
 // Function to parse YML content and return a Set of actions
 function parseActionsYml(ymlContent) {

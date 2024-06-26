@@ -8,7 +8,8 @@ export default (app) => {
   if (!process.env.approvedActionsOrg) throw new Error('Environment variable `approvedActionsOrg` is not set or is empty.');
   if (!process.env.approvedActionsRepo) throw new Error('Environment variable `approvedActionsRepo` is not set or is empty.');
   if (!process.env.approvedActionsFilePath) throw new Error('Environment variable `approvedActionsFilePath` is not set or is empty.');
-  // Your code here
+  if (!process.env.allowGitHubActionsOrgs) throw new Error('Environment variable `allowGitHubActionsOrgs` is not set or is empty.');
+
   app.log.info("Yay, the app was loaded!");
 
   app.on("workflow_run.requested", async (context) => {
@@ -73,10 +74,12 @@ export default (app) => {
 function parseActionsYml(ymlContent) {
   try {
     const doc = yaml.load(ymlContent);
-
-    // const actions = new Set(doc.actions);
-    // TODO: variable to allow/disallow github orgs
-    const actions = new Set([...doc.actions, 'github/*', 'actions/*']);
+    let actions = new Set();
+    actions = new Set([...doc.actions]);
+    if (process.env.allowGitHubActionsOrgs === 'true') {
+      actions.add('github/*');
+      actions.add('actions/*');
+    }
     return actions;
   } catch (e) {
     console.error('Failed to parse YML:', e);

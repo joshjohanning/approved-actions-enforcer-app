@@ -5,6 +5,9 @@ import yaml from 'js-yaml';
  * @param {import('probot').Probot} app
  */
 export default (app) => {
+  if (!process.env.approvedActionsOrg) throw new Error('Environment variable `approvedActionsOrg` is not set or is empty.');
+  if (!process.env.approvedActionsRepo) throw new Error('Environment variable `approvedActionsRepo` is not set or is empty.');
+  if (!process.env.approvedActionsFilePath) throw new Error('Environment variable `approvedActionsFilePath` is not set or is empty.');
   // Your code here
   app.log.info("Yay, the app was loaded!");
 
@@ -23,11 +26,7 @@ export default (app) => {
     app.log.info(`workflow_run_id: ${context.payload.workflow_run.id}`);
     app.log.info(`path: ${context.payload.workflow_run.path}`);
 
-    // TODO: set the org/repo/yml file as input/env variables
-    const approvedActions = await getFileContent(context, context.payload.repository.owner.login, 'actions-allow-list-as-code', 'github-actions-allow-list.yml');
-    // Log the content or do something with it
-
-    // TODO: debug logging
+    const approvedActions = await getFileContent(context, process.env.approvedActionsOrg, process.env.approvedActionsRepo, process.env.approvedActionsFilePath);
     app.log.debug(approvedActions);
 
     // Set to actions

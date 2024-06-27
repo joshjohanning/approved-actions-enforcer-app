@@ -15,7 +15,6 @@ try {
 
   app.on("workflow_run.requested", async (context) => {
     app.log.info(`Workflow run ${context.payload.workflow_run.id} requested in ${context.payload.repository.full_name}`);
-
     // Log the entire payload for debugging
     app.log.debug(context.payload.workflow_run);
     app.log.debug(`owner: ${context.payload.repository.owner.login}`);
@@ -27,13 +26,8 @@ try {
     app.log.debug(approvedActions);
 
     const actionsSet = parseActionsYml(approvedActions);
-    app.log.info(`Actions: ${actionsSet}`);
-    const firstActionIterator = actionsSet.values();
-    const firstAction = firstActionIterator.next().value;
-    app.log.info(`First Action: ${firstAction}`);
 
     const workflowYml = await getFileContent(context, context.payload.repository.owner.login, context.payload.repository.name, context.payload.workflow_run.path);
-    app.log.info(`Workflow YML: ${workflowYml}`);
 
     const actions = workflowYml.match(/(?<=^(?!\s*#).*uses: ).*/gm);
     app.log.info(`Actions: ${actions}`);

@@ -83,7 +83,7 @@ function actionExists(action, actionsSet) {
 function actionToRegex(action) {
   // Escape special characters and replace '*' with '.*' for wildcard matching
   const escapedAction = action.replace(/[-\/\\^$+?.()|[\]{}]/g, '\\$&').replace(/\*/g, '.*');
-  return new RegExp(`^${escapedAction}$`);
+  return new RegExp(`^${escapedAction}$`, 'i');
 }
 
 async function getFileContent(context, owner, repo, path) {

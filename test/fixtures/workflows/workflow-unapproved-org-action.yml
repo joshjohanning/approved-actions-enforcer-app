@@ -12,7 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: joshjohanning-org/composite-action-sample-python@main
+        with:
+          directory-path: ${{ github.workspace }}
+          token: ${{ github.token }}
 
       - uses: stefanbuck/github-issue-parser@v3
         continue-on-error: true
@@ -42,7 +45,7 @@ jobs:
         continue-on-error: true
 
       - name: Deploy GitHub Actions allow list
-        uses: ActionsDesk/github-actions-allow-list-as-code-action@v1.1.2 # case insensitive!
+        uses: ActionsDesk/github-actions-allow-list-as-code-action@v1.1.2
         with:
           token: ${{ secrets.ENTERPRISE_ADMIN_TOKEN }}
           enterprise: 'your-enterprise'

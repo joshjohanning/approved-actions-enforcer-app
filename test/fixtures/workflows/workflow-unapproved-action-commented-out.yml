@@ -12,9 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./local-action
+      # - uses: joshjohanning-org/composite-action-sample-python@main
+      #   with:
+      #     directory-path: ${{ github.workspace }}
+      #     token: ${{ github.token }}
 
       - uses: stefanbuck/github-issue-parser@v3
         continue-on-error: true
@@ -31,10 +32,6 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-      - uses: joshjohanning-org/composite-action-sample-python@main
-        with:
-          directory-path: ${{ github.workspace }}
-          token: ${{ github.token }}
 
       - name: ApproveOps - Approvals in IssueOps
         uses: joshjohanning/approveops@v2

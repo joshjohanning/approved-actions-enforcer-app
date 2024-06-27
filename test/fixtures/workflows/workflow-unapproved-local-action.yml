@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3' # Not needed with a .ruby-version file
+          ruby-version: "3.3" # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Run a one-line script
@@ -35,8 +35,8 @@ jobs:
         id: check-approval
         with:
           token: ${{ steps.app-token.outputs.token }}
-          approve-command: '/approve'
-          team-name: 'approver-team'
+          approve-command: "/approve"
+          team-name: "approver-team"
           fail-if-approval-not-found: true
           post-successful-approval-comment: false
         continue-on-error: true
@@ -45,6 +45,6 @@ jobs:
         uses: ActionsDesk/github-actions-allow-list-as-code-action@v1.1.2
         with:
           token: ${{ secrets.ENTERPRISE_ADMIN_TOKEN }}
-          enterprise: 'your-enterprise'
+          enterprise: "your-enterprise"
           # same as defined under `on.pull_requests.paths`
           allow_list_path: github-actions-allow-list.yml

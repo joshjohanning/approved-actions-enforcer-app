@@ -17,7 +17,10 @@ const privateKey = fs.readFileSync(
 );
 
 const payload = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "fixtures/workflow.requested.json"), "utf-8"),
+  fs.readFileSync(
+    path.join(__dirname, "fixtures/workflow.requested.json"),
+    "utf-8",
+  ),
 );
 
 process.env.approvedActionsOrg = "joshjohanning-org";
@@ -51,13 +54,37 @@ describe("My Probot app", () => {
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent('github-actions-allow-list.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/actions-allow-lists/actions-allow-list-normal.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent("github-actions-allow-list.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/actions-allow-lists/actions-allow-list-normal.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent('.github/workflows/workflow.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/workflows/workflow-approved-actions-wildcards.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent(".github/workflows/workflow.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/workflows/workflow-approved-actions-wildcards.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Receive a webhook event
     await probot.receive({ name: "workflow_run.requested", payload });
@@ -73,13 +100,37 @@ describe("My Probot app", () => {
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent('github-actions-allow-list.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/actions-allow-lists/actions-allow-list-normal.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent("github-actions-allow-list.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/actions-allow-lists/actions-allow-list-normal.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent('.github/workflows/workflow.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/workflows/workflow-approved-actions-wildcards.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent(".github/workflows/workflow.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/workflows/workflow-approved-actions-wildcards.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Receive a webhook event
     await probot.receive({ name: "workflow_run.requested", payload });
@@ -95,13 +146,37 @@ describe("My Probot app", () => {
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent('github-actions-allow-list.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/actions-allow-lists/actions-allow-list-normal.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent("github-actions-allow-list.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/actions-allow-lists/actions-allow-list-normal.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent('.github/workflows/workflow.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/workflows/workflow-unapproved-action-commented-out.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent(".github/workflows/workflow.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/workflows/workflow-unapproved-action-commented-out.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Receive a webhook event
     await probot.receive({ name: "workflow_run.requested", payload });
@@ -117,13 +192,37 @@ describe("My Probot app", () => {
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent('github-actions-allow-list.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/actions-allow-lists/actions-allow-list-case-insensitive.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent("github-actions-allow-list.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/actions-allow-lists/actions-allow-list-case-insensitive.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent('.github/workflows/workflow.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/workflows/workflow-approved-actions-normal.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent(".github/workflows/workflow.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/workflows/workflow-approved-actions-normal.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Receive a webhook event
     await probot.receive({ name: "workflow_run.requested", payload });
@@ -141,13 +240,37 @@ describe("My Probot app", () => {
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent('github-actions-allow-list.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/actions-allow-lists/actions-allow-list-normal.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent("github-actions-allow-list.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/actions-allow-lists/actions-allow-list-normal.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent('.github/workflows/workflow.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/workflows/workflow-approved-actions-github-orgs.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent(".github/workflows/workflow.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/workflows/workflow-approved-actions-github-orgs.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Receive a webhook event
     await probot.receive({ name: "workflow_run.requested", payload });
@@ -165,17 +288,43 @@ describe("My Probot app", () => {
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent('github-actions-allow-list.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/actions-allow-lists/actions-allow-list-normal.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent("github-actions-allow-list.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/actions-allow-lists/actions-allow-list-normal.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent('.github/workflows/workflow.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/workflows/workflow-approved-actions-github-orgs.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent(".github/workflows/workflow.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/workflows/workflow-approved-actions-github-orgs.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock the API call to cancel a workflow run
     nock("https://api.github.com")
-      .post("/repos/joshjohanning-org/actions-throwaway/actions/runs/9688896502/cancel")
+      .post(
+        "/repos/joshjohanning-org/actions-throwaway/actions/runs/9688896502/cancel",
+      )
       .reply(202); // Assuming 202 Accepted is the response for a successful cancellation
 
     // Receive a webhook event
@@ -192,17 +341,43 @@ describe("My Probot app", () => {
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent('github-actions-allow-list.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/actions-allow-lists/actions-allow-list-normal.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent("github-actions-allow-list.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/actions-allow-lists/actions-allow-list-normal.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent('.github/workflows/workflow.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/workflows/workflow-unapproved-org-action.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent(".github/workflows/workflow.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/workflows/workflow-unapproved-org-action.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock the API call to cancel a workflow run
     nock("https://api.github.com")
-      .post("/repos/joshjohanning-org/actions-throwaway/actions/runs/9688896502/cancel")
+      .post(
+        "/repos/joshjohanning-org/actions-throwaway/actions/runs/9688896502/cancel",
+      )
       .reply(202); // Assuming 202 Accepted is the response for a successful cancellation
 
     // Receive a webhook event
@@ -219,17 +394,43 @@ describe("My Probot app", () => {
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent('github-actions-allow-list.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/actions-allow-lists/actions-allow-list-normal.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-allow-list-as-code/contents/${encodeURIComponent("github-actions-allow-list.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/actions-allow-lists/actions-allow-list-normal.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock retrieving the workflow.yml content
     nock("https://api.github.com")
-      .get(`/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent('.github/workflows/workflow.yml')}`)
-      .reply(200, { content: Buffer.from(fs.readFileSync(path.join(__dirname, "fixtures/workflows/workflow-unapproved-local-action.yml"), "utf-8")).toString('base64') });
+      .get(
+        `/repos/joshjohanning-org/actions-throwaway/contents/${encodeURIComponent(".github/workflows/workflow.yml")}`,
+      )
+      .reply(200, {
+        content: Buffer.from(
+          fs.readFileSync(
+            path.join(
+              __dirname,
+              "fixtures/workflows/workflow-unapproved-local-action.yml",
+            ),
+            "utf-8",
+          ),
+        ).toString("base64"),
+      });
 
     // Mock the API call to cancel a workflow run
     nock("https://api.github.com")
-      .post("/repos/joshjohanning-org/actions-throwaway/actions/runs/9688896502/cancel")
+      .post(
+        "/repos/joshjohanning-org/actions-throwaway/actions/runs/9688896502/cancel",
+      )
       .reply(202); // Assuming 202 Accepted is the response for a successful cancellation
 
     // Receive a webhook event

@@ -40,7 +40,7 @@ jobs:
         continue-on-error: true
 
       - name: Deploy GitHub Actions allow list
-        uses: ActionsDesk/github-actions-allow-list-as-code-action@v1.1.2 # case insensitive and v* wildcard prefix!
+        uses: actionsdesk/github-actions-allow-list-as-code-action@v1.1.2 # case insensitive and v* wildcard prefix!
         with:
           token: ${{ secrets.ENTERPRISE_ADMIN_TOKEN }}
           enterprise: "your-enterprise"

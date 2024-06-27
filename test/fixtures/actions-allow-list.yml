@@ -1,0 +1,5 @@
+actions:
+  - ruby/setup-ruby@v1
+  - stefanbuck/github-issue-parser@*
+  - actionsdesk/github-actions-allow-list-as-code-action@v*
+  - joshjohanning/*

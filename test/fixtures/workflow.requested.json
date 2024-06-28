@@ -1,0 +1,17 @@
+{
+  "action": "requested",
+  "workflow_run": {
+    "id": 9688896502,
+    "path": ".github/workflows/workflow.yml"
+  },
+  "repository": {
+    "name": "actions-throwaway",
+    "full_name": "joshjohanning-org/actions-throwaway",
+    "owner": {
+      "login": "joshjohanning-org"
+    }
+  },
+  "installation": {
+    "id": 52238995
+  }
+}

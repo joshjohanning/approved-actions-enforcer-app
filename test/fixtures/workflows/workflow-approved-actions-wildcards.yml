@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: stefanbuck/github-issue-parser@v3
+        continue-on-error: true
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3" # Not needed with a .ruby-version file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+      - name: ApproveOps - Approvals in IssueOps
+        uses: joshjohanning/approveops@v2
+        id: check-approval
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          approve-command: "/approve"
+          team-name: "approver-team"
+          fail-if-approval-not-found: true
+          post-successful-approval-comment: false
+        continue-on-error: true
+
+      - name: Deploy GitHub Actions allow list
+        uses: actionsdesk/github-actions-allow-list-as-code-action@v1.1.2 # case insensitive and v* wildcard prefix!
+        with:
+          token: ${{ secrets.ENTERPRISE_ADMIN_TOKEN }}
+          enterprise: "your-enterprise"
+          # same as defined under `on.pull_requests.paths`
+          allow_list_path: github-actions-allow-list.yml

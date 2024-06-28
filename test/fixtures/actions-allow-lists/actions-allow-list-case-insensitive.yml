@@ -1,0 +1,6 @@
+actions:
+  - Ruby/setup-Ruby@v1
+  - stefanbuck/github-issue-parser@*
+  - Actionsdesk/github-actions-allow-list-as-code-action@v*
+  - JoshJohanning/*
+  - lindluni/actions-variable-groups@v2

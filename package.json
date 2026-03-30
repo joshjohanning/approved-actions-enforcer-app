@@ -1,6 +1,6 @@
 {
   "name": "approved-actions-enforcer-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "A Probot app designed to review Actions workflows to ensure it is running approved actions, and if not, terminate the workflow",
   "author": "Josh Johanning",

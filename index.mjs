@@ -109,7 +109,7 @@ function actionToRegex(action) {
 
 async function getFileContent(context, owner, repo, path) {
   try {
-    const fileContentResponse = await context.octokit.repos.getContent({
+    const fileContentResponse = await context.octokit.rest.repos.getContent({
       owner,
       repo,
       path,
@@ -127,7 +127,7 @@ async function getFileContent(context, owner, repo, path) {
 
 async function cancelWorkflowRun(app, context) {
   try {
-    await context.octokit.actions.cancelWorkflowRun({
+    await context.octokit.rest.actions.cancelWorkflowRun({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
       run_id: context.payload.workflow_run.id,
